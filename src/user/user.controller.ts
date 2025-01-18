@@ -34,6 +34,7 @@ export class UserController {
   findOne(@Param('id') id: string) {
     return this.userService.findOne(+id);
   }
+
   // @ApiParam({required: true})
   @Patch(':id')
   update(

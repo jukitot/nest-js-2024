@@ -10,9 +10,12 @@ import {
   Query,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { AccountResponseDto, UpdateUserDto, UserDto, UserQueryDto } from "./dto/user.dto";
-import { ApiParam, ApiQuery, ApiResponse, ApiTags } from "@nestjs/swagger";
+import { AccountResponseDto, UserDto, UserItemDto } from "./dto/user.dto";
+import { ApiExtraModels, ApiResponse, ApiTags } from "@nestjs/swagger";
+import { BaseQueryDto } from "../common/validator/base.query.validator";
+import { ApiPaginatedResponse } from "../common/interface/response.interface";
 @ApiTags('User')
+@ApiExtraModels(UserItemDto)
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
@@ -20,14 +23,14 @@ export class UserController {
   @ApiResponse({ status: HttpStatus.CREATED, type: AccountResponseDto })
   @Post('/create')
   async createUser(@Body() createUserDto: UserDto) {
-    // if (createUserDto){
-    // }
     return this.userService.create(createUserDto);
   }
+
+  @ApiPaginatedResponse('entities', UserItemDto)
   // @ApiQuery({ name: 'limit', type: 'string', example: 10 })
   @Get('/list')
-  findAll(@Query() query: UserQueryDto) {
-    return this.userService.findAllUsers();
+  findAll(@Query() query: BaseQueryDto) {
+    return this.userService.findAllUsers(query);
   }
 
   @Get(':id')
@@ -37,11 +40,8 @@ export class UserController {
 
   // @ApiParam({required: true})
   @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateUserDto: UpdateUserDto
-  ) {
-    return this.userService.update(+id, updateUserDto);
+  update(@Param('id') id: string) {
+    return this.userService.update(+id);
   }
 
   @Delete(':id')

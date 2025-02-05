@@ -10,15 +10,18 @@ import {
 import { AuthService } from './auth.service';
 // import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
-import { ForgotPassword } from "../user/dto/user.dto";
+import { ForgotPassword, SingUpDto, UserDto } from "../user/dto/user.dto";
+import { ApiOkResponse } from "@nestjs/swagger";
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post()
-  create(@Body() createAuthDto: ForgotPassword) {
-    return this.authService.create(createAuthDto);
+  @ApiOkResponse({ type: SingUpDto })
+
+  @Post('/register')
+  create(@Body() body: UserDto) {
+    return this.authService.singUpUser(body);
   }
 
   @Get()

@@ -8,9 +8,8 @@ import {
   Matches,
 } from 'class-validator';
 import { Transform } from 'class-transformer';
-import { Match } from "../../common/decorators/password.decorator";
-import { IsCityAllow } from "../../common/decorators/city.decorator";
-
+import { Match } from '../../common/decorators/password.decorator';
+import { IsCityAllow } from '../../common/decorators/city.decorator';
 
 export class UserDto {
   @IsString()

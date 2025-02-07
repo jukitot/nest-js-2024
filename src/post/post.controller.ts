@@ -8,15 +8,14 @@ import {
   Delete,
 } from '@nestjs/common';
 import { PostService } from './post.service';
-import { CreatePostDto } from './dto/create-post.dto';
-import { UpdatePostDto } from './dto/update-post.dto';
+import { PostDto } from './dto/post.dto';
 
 @Controller('post')
 export class PostController {
   constructor(private readonly postService: PostService) {}
 
   @Post()
-  create(@Body() createPostDto: CreatePostDto) {
+  create(@Body() createPostDto: PostDto) {
     return this.postService.create(createPostDto);
   }
 
@@ -31,7 +30,7 @@ export class PostController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
+  update(@Param('id') id: string, @Body() updatePostDto: PostDto) {
     return this.postService.update(+id, updatePostDto);
   }
 

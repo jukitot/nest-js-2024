@@ -10,10 +10,10 @@ import {
   Query,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { AccountResponseDto, UserDto, UserItemDto } from "./dto/user.dto";
-import { ApiExtraModels, ApiResponse, ApiTags } from "@nestjs/swagger";
-import { BaseQueryDto } from "../common/validator/base.query.validator";
-import { ApiPaginatedResponse } from "../common/interface/response.interface";
+import { AccountResponseDto, UserDto, UserItemDto } from './dto/user.dto';
+import { ApiExtraModels, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { BaseQueryDto } from '../common/validator/base.query.validator';
+import { ApiPaginatedResponse } from '../common/interface/response.interface';
 @ApiTags('User')
 @ApiExtraModels(UserItemDto)
 @Controller('user')

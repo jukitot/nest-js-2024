@@ -1,7 +1,4 @@
-import {
-  registerDecorator,
-  ValidationOptions,
-} from 'class-validator';
+import { registerDecorator, ValidationOptions } from 'class-validator';
 
 export function IsCityAllow(validationOptions?: ValidationOptions) {
   return (Object: any, propertyName: string) => {

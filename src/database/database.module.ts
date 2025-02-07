@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TypeOrmConfigService } from "./database.service";
-import { DataSource } from "typeorm";
+import { TypeOrmConfigService } from './database.service';
+import { DataSource } from 'typeorm';
 
 @Module({
   imports: [
@@ -11,4 +11,5 @@ import { DataSource } from "typeorm";
   ],
 })
 export class DatabaseModule {
-  constructor(private dataSource: DataSource) {}}
+  constructor(private dataSource: DataSource) {}
+}

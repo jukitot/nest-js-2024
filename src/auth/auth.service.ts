@@ -1,16 +1,19 @@
-import { BadRequestException, Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { UpdateAuthDto } from './dto/update-auth.dto';
-import { ForgotPassword, SingUpDto, UserDto } from "../user/dto/user.dto";
+import { ForgotPassword, SingUpDto, UserDto } from '../user/dto/user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../database/entities/user.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { InjectRedisClient, RedisClient } from "@webeleon/nestjs-redis";
 
 @Injectable()
 export class AuthService {
+  private redisUserKey = 'user-register';
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+    @InjectRedisClient() private readonly redisClient: RedisClient,
   ) {}
   async singUpUser(data: UserDto): Promise<SingUpDto> {
     const findUser = await this.userRepository.findOne({
@@ -26,6 +29,18 @@ export class AuthService {
         password,
       }),
     );
+
+    await this.redisClient.setEx(
+      this.redisUserKey,
+      2 * 60,
+      JSON.stringify(user),
+    );
+
+
+    const userInRedis = JSON.parse(await this.redisClient.get(this.redisUserKey));
+    // const userInRedisSecond = JSON.parse(await this.redisClient.del('user'));
+    console.log(userInRedis, userInRedisSecond);
+
     return {
       id: user.id,
       email: user.email,

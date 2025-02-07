@@ -5,7 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../database/entities/user.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { InjectRedisClient, RedisClient } from "@webeleon/nestjs-redis";
+import { InjectRedisClient, RedisClient } from '@webeleon/nestjs-redis';
 
 @Injectable()
 export class AuthService {
@@ -35,11 +35,11 @@ export class AuthService {
       2 * 60,
       JSON.stringify(user),
     );
-
-
-    const userInRedis = JSON.parse(await this.redisClient.get(this.redisUserKey));
+    const userInRedis = JSON.parse(
+      await this.redisClient.get(this.redisUserKey),
+    );
     // const userInRedisSecond = JSON.parse(await this.redisClient.del('user'));
-    console.log(userInRedis, userInRedisSecond);
+    console.log(userInRedis);
 
     return {
       id: user.id,

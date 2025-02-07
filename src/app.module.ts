@@ -7,7 +7,7 @@ import { PostModule } from './post/post.module';
 import { ConfigModule } from '@nestjs/config';
 import configuration from './common/config/configuration';
 import { DatabaseModule } from './database/database.module';
-import { RedisModule } from "@webeleon/nestjs-redis";
+import { RedisModule } from '@webeleon/nestjs-redis';
 
 @Module({
   imports: [

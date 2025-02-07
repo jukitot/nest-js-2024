@@ -26,7 +26,6 @@ export class UserService {
       limit: +query?.limit || 10,
     };
 
-
     // const select = 'email, "firstName", age, id, "createdAt"'
 
     // queryBuilder
@@ -66,29 +65,26 @@ export class UserService {
     //     entities: await queryBuilder.getMany(),
     //   };
 
-
-
     const [entities, total] = await this.userRepository.findAndCount({
-      where: { isActive : true },
+      where: { isActive: true },
       select: {
         email: true,
         firstName: true,
-        id: true
+        id: true,
       },
       relations: {
-        posts: true
+        posts: true,
       },
       skip: (options.page - 1) * options.limit,
-      take: options.limit
-    })
-
+      take: options.limit,
+    });
 
     return {
-        page: options.page,
-        pages: Math.ceil(total/options.limit),
-        countItems: total,
-        entities: entities,
-      };
+      page: options.page,
+      pages: Math.ceil(total / options.limit),
+      countItems: total,
+      entities: entities,
+    };
   }
 
   findOne(id: number) {
